@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Bestie Mode 💕</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI', sans-serif;
+  background:#22223b;
+  transition:.6s;
+}
+body.active{
+  background:linear-gradient(135deg,#ffb6c1,#ffe4e1);
+}
+
+.card{
+  width:360px;
+  padding:25px;
+  border-radius:25px;
+  background:rgba(255,255,255,.18);
+  box-shadow:0 15px 35px rgba(0,0,0,.3);
+  text-align:center;
+}
+
+/* FOTO AWAL */
+.single-photo{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid #fff;
+  animation:fadeZoom .8s ease;
+}
+
+/* FRAME FOTO */
+.frame{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding:10px;
+  background:#fff;
+  border-radius:20px;
+}
+
+/* FOTO DALAM FRAME */
+.frame img{
+  width:100%;
+  height:90px;
+  object-fit:cover;
+  border-radius:12px;
+  opacity:0;
+  transform:scale(.6);
+  animation:pop .5s ease forwards;
+}
+
+/* delay biar muncul satu-satu */
+.frame img:nth-child(1){animation-delay:.1s}
+.frame img:nth-child(2){animation-delay:.2s}
+.frame img:nth-child(3){animation-delay:.3s}
+.frame img:nth-child(4){animation-delay:.4s}
+.frame img:nth-child(5){animation-delay:.5s}
+.frame img:nth-child(6){animation-delay:.6s}
+.frame img:nth-child(7){animation-delay:.7s}
+.frame img:nth-child(8){animation-delay:.8s}
+.frame img:nth-child(9){animation-delay:.9s}
+
+.frame img:hover{
+  transform:scale(1.1) rotate(-3deg);
+}
+
+/* SWITCH */
+.switch{
+  margin-top:18px;
+  width:65px;
+  height:32px;
+  position:relative;
+  display:inline-block;
+}
+.switch input{display:none}
+.slider{
+  position:absolute;
+  inset:0;
+  background:#ccc;
+  border-radius:40px;
+  cursor:pointer;
+}
+.slider:before{
+  content:"";
+  position:absolute;
+  width:24px;
+  height:24px;
+  background:#fff;
+  border-radius:50%;
+  left:4px;
+  top:4px;
+  transition:.4s;
+}
+input:checked + .slider{
+  background:#ff69b4;
+}
+input:checked + .slider:before{
+  transform:translateX(33px);
+}
+
+h2{margin:15px 0 5px}
+p{font-size:14px}
+
+/* ANIMASI */
+@keyframes fadeZoom{
+  from{opacity:0; transform:scale(.7)}
+  to{opacity:1; transform:scale(1)}
+}
+@keyframes pop{
+  to{opacity:1; transform:scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h2 id="title">Hai Bestie 👋</h2>
+
+  <!-- FOTO PERTAMA -->
+  <img id="single" class="single-photo" src="foto1.jpg">
+
+  <!-- FRAME FOTO BANYAK -->
+  <div id="frame" class="frame">
+    <img src="foto2.jpg">
+    <img src="foto3.jpg">
+    <img src="foto4.jpg">
+    <img src="foto5.jpg">
+    <img src="foto6.jpg">
+    <img src="foto7.jpg">
+    <img src="foto8.jpg">
+    <img src="foto9.jpg">
+    <img src="foto10.jpg">
+  </div>
+
+  <p id="text">Klik tombolnya dong 😆</p>
+
+  <label class="switch">
+    <input type="checkbox" id="toggle">
+    <span class="slider"></span>
+  </label>
+
+  <!-- AUDIO -->
+  <audio id="musik" src="yurajalanpulang.mp3" loop></audio>
+
+</div>
+
+<script>
+const toggle = document.getElementById("toggle");
+const single = document.getElementById("single");
+const frame = document.getElementById("frame");
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const musik = document.getElementById("musik");
+
+toggle.addEventListener("change", () => {
+  if(toggle.checked){
+    document.body.classList.add("active");
+    single.style.display="none";
+    frame.style.display="grid";
+    title.innerText="💖 kenangan kita💖";
+    text.innerText="ada hari-hari capek, hari ingin menyerah,tapi kehadiran kalian bikin semuanya terasa lebih ringan.Bukan karena hidup jadi sempurna,tapi karena ada teman yang mau mendengar tanpa menghakimi.😆🫶";
+
+    // Mainkan musik
+    musik.play().catch(err=>{
+      console.log("Autoplay diblok browser, klik tombol untuk play");
+    });
+
+  }else{
+    document.body.classList.remove("active");
+    frame.style.display="none";
+    single.style.display="block";
+    title.innerText="Hai Bestie 👋";
+    text.innerText="Klik tombolnya dong 😆";
+
+    musik.pause();
+    musik.currentTime = 0;
+  }
+});
+</script>
+
+</body>
+</html>
